@@ -1,0 +1,19 @@
+.spin-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
+  height: 100%;
+
+  .ant-spin-dot-item {
+    width: 25px !important;
+    height: 25px !important;
+  }
+
+  &__content {
+    padding: 50px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+  }
+}
