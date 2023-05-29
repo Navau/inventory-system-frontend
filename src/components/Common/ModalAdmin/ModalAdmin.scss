@@ -1,0 +1,36 @@
+@import "../../../scss/colors.scss";
+.ant-modal-header {
+  .ant-modal-title {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: $light-gray;
+    color: $white-smoke;
+    padding: 10px 20px;
+    border-radius: 4px;
+  }
+}
+.ant-modal-content {
+  .ant-modal-close {
+    margin: 8px 8px 0 0;
+    svg {
+      color: $white-smoke;
+    }
+  }
+}
+.modal-admin-add {
+  .ant-modal-title {
+    background-color: $primary-blue;
+  }
+}
+.modal-admin-update {
+  .ant-modal-title {
+    background-color: $edit-blue;
+  }
+}
+
+.modal-admin-delete {
+  .ant-modal-title {
+    background-color: $danger-red;
+  }
+}

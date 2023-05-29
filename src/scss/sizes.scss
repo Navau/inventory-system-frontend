@@ -1,0 +1,54 @@
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+/* Utiliza unidades de tamaño relativo para hacer que el tamaño de la fuente sea responsivo */
+h1 {
+  font-size: 2rem; /* 32px */
+}
+
+h2 {
+  font-size: 1.5rem; /* 24px */
+}
+
+p {
+  font-size: 1rem; /* 16px */
+}
+
+/* Utiliza media queries para ajustar el tamaño de la fuente en diferentes tamaños de pantalla */
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 1.5rem; /* 24px */
+  }
+
+  h2 {
+    font-size: 1.25rem; /* 20px */
+  }
+
+  p {
+    font-size: 0.875rem; /* 14px */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    font-size: 12px;
+  }
+
+  h1 {
+    font-size: 1.25rem; /* 20px */
+  }
+
+  h2 {
+    font-size: 1rem; /* 16px */
+  }
+
+  p {
+    font-size: 0.75rem; /* 12px */
+  }
+}

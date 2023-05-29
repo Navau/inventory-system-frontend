@@ -1,7 +1,17 @@
 import React from "react";
+import { ConfigProvider, theme } from "antd";
 import { Navigation } from "./routes";
 import "./App.scss";
 
 export default function App() {
-  return <Navigation />;
+  // theme={
+  //   {
+  //     // algorithm: theme.darkAlgorithm,
+  //   }
+  // }
+  return (
+    <ConfigProvider>
+      <Navigation />
+    </ConfigProvider>
+  );
 }

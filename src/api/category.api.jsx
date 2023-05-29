@@ -52,7 +52,7 @@ export async function addCategoryApi(data, token) {
       .then((response) => {
         const result = response.data;
         const status = response?.status;
-        if (status !== 200 && status !== 201) throw result;
+
         return result;
       })
       .catch((err) => {
@@ -78,7 +78,7 @@ export async function updateCategoryApi(id, data, token) {
       .then((response) => {
         const result = response.data;
         const status = response?.status;
-        if (status !== 200 && status !== 201) throw result;
+
         return result;
       })
       .catch((err) => {
@@ -89,22 +89,20 @@ export async function updateCategoryApi(id, data, token) {
   }
 }
 
-export async function deleteCategoryApi(id, data, token) {
+export async function deleteCategoryApi(id, token) {
   try {
-    const url = `${BASE_API}/api/categories/${id}`;
+    const url = `${BASE_API}/api/categories/${id}/`;
     const options = {
       headers: {
         // Authorization: `${TYPE_TOKEN} ${token}`,
         "Content-Type": "application/json",
       },
     };
-    const body = JSON.stringify(data);
     return await axios
-      .delete(url, body, options)
+      .delete(url, options)
       .then((response) => {
         const result = response.data;
         const status = response?.status;
-        if (status !== 200 && status !== 201) throw result;
         return result;
       })
       .catch((err) => {

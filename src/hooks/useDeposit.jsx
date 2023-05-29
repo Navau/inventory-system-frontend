@@ -8,69 +8,68 @@ import {
 } from "../api/deposit.api";
 
 export function useDeposit() {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [loadingDeposit, setLoadingDeposit] = useState(false);
   const [deposits, setDeposits] = useState([]);
   const [deposit, setDeposit] = useState(undefined);
   //   const auth = useAuth()
 
   const getDeposits = async () => {
     try {
-      setLoading(true);
+      setLoadingDeposit(true);
       const response = await getDepositsApi();
-      setLoading(false);
+      setLoadingDeposit(false);
       setDeposits(response);
     } catch (err) {
-      setLoading(false);
-      setError(err);
+      setLoadingDeposit(false);
+      throw err;
     }
   };
 
   const getDepositById = async () => {
     try {
-      setLoading(true);
+      setLoadingDeposit(true);
       const response = await getDepositByIdApi();
-      setLoading(false);
+      setLoadingDeposit(false);
       setDeposit(response);
     } catch (err) {
-      setLoading(false);
-      setError(err);
+      setLoadingDeposit(false);
+      throw err;
     }
   };
 
   const addDeposit = async (data) => {
     try {
-      setLoading(true);
+      setLoadingDeposit(true);
       const response = await addDepositApi(data); //auth.token
-      setLoading(false);
+      setLoadingDeposit(false);
       setDeposit(response);
     } catch (err) {
-      setLoading(false);
-      setError(err);
+      setLoadingDeposit(false);
+      throw err;
     }
   };
 
-  const updateDeposit = async (data) => {
+  const updateDeposit = async (id, data) => {
     try {
-      setLoading(true);
-      const response = await updateDepositApi(data); //auth.token
-      setLoading(false);
+      setLoadingDeposit(true);
+      const response = await updateDepositApi(id, data); //auth.token
+      setLoadingDeposit(false);
       setDeposit(response);
     } catch (err) {
-      setLoading(false);
-      setError(err);
+      setLoadingDeposit(false);
+      throw err;
     }
   };
 
-  const deleteDeposit = async (data) => {
+  const deleteDeposit = async (id) => {
     try {
-      setLoading(true);
-      const response = await deleteDepositApi(data); //auth.token
-      setLoading(false);
+      setLoadingDeposit(true);
+      const response = await deleteDepositApi(id); //auth.token
+      setLoadingDeposit(false);
       setDeposit(response);
     } catch (err) {
-      setLoading(false);
-      setError(err);
+      setLoadingDeposit(false);
+      throw err;
     }
   };
 
@@ -80,8 +79,7 @@ export function useDeposit() {
     addDeposit,
     updateDeposit,
     deleteDeposit,
-    loading,
-    error,
+    loadingDeposit,
     deposits,
     deposit,
   };

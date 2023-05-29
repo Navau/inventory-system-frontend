@@ -14,6 +14,7 @@
     "antd": "^5.5.1",
     "axios": "^1.4.0",
     "formik": "^2.2.9",
+    "inflection": "^2.0.1",
     "lodash": "^4.17.21",
     "luxon": "^3.3.0",
     "react": "^18.2.0",
@@ -22,6 +23,7 @@
     "react-responsive": "^9.0.2",
     "react-router-dom": "^6.11.2",
     "sass": "^1.62.1",
+    "translate": "^2.0.2",
     "yup": "^1.1.1"
   },
   "devDependencies": {

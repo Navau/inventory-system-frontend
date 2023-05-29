@@ -1,17 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useCategory, useDeposit, useProduct } from "../../../../hooks";
-import {
-  Form,
-  Input,
-  Space,
-  Spin,
-  Grid,
-  Col,
-  Row,
-  Select,
-  Button,
-  notification,
-} from "antd";
+import { Form, Input, Spin, Grid, Col, Row, Select, Button, Space } from "antd";
 import { isUndefined, map } from "lodash";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -31,32 +20,39 @@ import {
 } from "./AddEditProductFormAdmin.validations";
 
 import "./AddEditProductFormAdmin.scss";
+import {
+  renderError,
+  renderMessageAction,
+} from "../../../../utils/renderHelpers";
 
 export function AddEditProductFormAdmin(props) {
   const { onClose, onRefetch, product = undefined } = props;
-  const [loadingData, setLoadingData] = useState(false);
-  // const [productData, setProductData] = useState(undefined);
-  // const [categoriesData, setCategoriesData] = useState([]);
-  // const [depositsData, setDepositsData] = useState([]);
   const { addProduct, updateProduct } = useProduct();
-  const { categories, getCategories } = useCategory();
-  const { deposits, getDeposits } = useDeposit();
+  const { loadingCategory, categories, getCategories } = useCategory();
+  const { loadingDeposit, deposits, getDeposits } = useDeposit();
 
   //TO DO: verificar porque tarda tanto al cargar junto al modal
+  // useEffect(() => {
+  //   const fetchDataAux = async () => {
+  //     setLoadingData(true);
+  //     await getCategories();
+  //     await getDeposits();
+  //     setLoadingData(false);
+  //   };
+  //   fetchDataAux();
+  // }, [product]);
   useEffect(() => {
-    const fetchDataAux = async () => {
-      setLoadingData(true);
-      await getCategories();
-      await getDeposits();
-      setLoadingData(false);
-    };
-    fetchDataAux();
-  }, []);
+    (async () => {
+      await getCategories().catch((err) =>
+        renderError(err, "categories", "getAll")
+      );
+      await getDeposits().catch((err) =>
+        renderError(err, "deposits", "getAll")
+      );
+    })();
+  }, [product]);
 
-  if (loadingData) return <Spin size="large" />;
-  // if (loadingData) return null;
-
-  // console.log({ product, categories, deposits });
+  if (loadingCategory || loadingDeposit) return <Spin size="large" />;
 
   return (
     <div className="add-edit-user-form-admin">
@@ -66,7 +62,8 @@ export function AddEditProductFormAdmin(props) {
         deposits={deposits}
         addProduct={addProduct}
         updateProduct={updateProduct}
-        loadingData={loadingData}
+        loadingCategory={loadingCategory}
+        loadingDeposit={loadingDeposit}
         onRefetch={onRefetch}
         onClose={onClose}
       />
@@ -81,7 +78,8 @@ function ProductForm(props) {
     deposits,
     addProduct,
     updateProduct,
-    loadingData,
+    loadingCategory,
+    loadingDeposit,
     onClose,
     onRefetch,
   } = props;
@@ -98,22 +96,17 @@ function ProductForm(props) {
     onSubmit: async (formValue) => {
       try {
         if (isUndefined(product)) {
-          const responseAdd = await addProduct(formValue);
-          notification["success"]({
-            message: "Creado correctamente",
-          });
+          await addProduct();
+          renderMessageAction("add", "Product");
         } else {
-          const responseUpdate = await updateProduct(formValue);
-          notification["success"]({
-            message: "Actualizado correctamente",
-          });
+          const id = product?.id || -1;
+          await updateProduct(id, formValue);
+          renderMessageAction("update", "Product");
         }
         onRefetch();
         onClose();
       } catch (err) {
-        notification["error"]({
-          message: err.message,
-        });
+        renderError(err, "Products", isUndefined(product) ? "add" : "update");
       }
     },
   });
@@ -122,20 +115,34 @@ function ProductForm(props) {
     <Form className="form-add-edit" onSubmitCapture={formik.handleSubmit}>
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <Form.Item>
+          <Form.Item
+            label={
+              <Space>
+                <TagOutlined />
+                <span>Nombre del producto</span>
+              </Space>
+            }
+            validateStatus={formik.errors.name ? "error" : ""}
+            help={formik.errors.name}
+          >
             <Input
               name="name"
-              prefix={<TagOutlined />}
               placeholder="Nombre del producto"
               status={formik.errors.name && "error"}
               value={formik.values.name}
               onChange={formik.handleChange}
             />
-            <span className="form-add-edit__error-label">
-              {formik.errors.name}
-            </span>
           </Form.Item>
-          <Form.Item>
+          <Form.Item
+            label={
+              <Space>
+                <FileTextOutlined />
+                <span>Descripción del producto</span>
+              </Space>
+            }
+            validateStatus={formik.errors.description ? "error" : ""}
+            help={formik.errors.description}
+          >
             <Input.TextArea
               name="description"
               rows={3}
@@ -145,55 +152,72 @@ function ProductForm(props) {
               value={formik.values.description}
               onChange={formik.handleChange}
             />
-            <span className="form-add-edit__error-label">
-              {formik.errors.description}
-            </span>
           </Form.Item>
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={screens.md ? 12 : 24}>
-          <Form.Item>
+          <Form.Item
+            label={
+              <Space>
+                <DollarOutlined />
+                <span>Precio</span>
+              </Space>
+            }
+            validateStatus={formik.errors.price ? "error" : ""}
+            help={formik.errors.price}
+          >
             <Input
               name="price"
               type="decimal"
-              prefix={<DollarOutlined />}
               status={formik.errors.price && "error"}
               placeholder="Precio"
               value={formik.values.price}
               onChange={formik.handleChange}
             />
-            <span className="form-add-edit__error-label">
-              {formik.errors.price}
-            </span>
           </Form.Item>
         </Col>
         <Col span={screens.md ? 12 : 24}>
-          <Form.Item>
+          <Form.Item
+            label={
+              <Space>
+                <StockOutlined />
+                <span>Stock</span>
+              </Space>
+            }
+            validateStatus={formik.errors.stock ? "error" : ""}
+            help={formik.errors.stock}
+          >
             <Input
               name="stock"
               type="number"
-              prefix={<StockOutlined />}
               placeholder="Stock"
               status={formik.errors.stock && "error"}
               value={formik.values.stock}
               onChange={formik.handleChange}
             />
-            <span className="form-add-edit__error-label">
-              {formik.errors.stock}
-            </span>
           </Form.Item>
         </Col>
       </Row>
       <Row gutter={[16, 16]}>
         <Col span={screens.md ? 12 : 24}>
-          <Form.Item>
+          <Form.Item
+            label={
+              <Space>
+                <UnorderedListOutlined />
+                <span>Categoría</span>
+              </Space>
+            }
+            validateStatus={formik.errors.category ? "error" : ""}
+            help={formik.errors.category}
+          >
             <Select
               placeholder="Selecciona una Categoría"
-              loading={loadingData}
+              loading={loadingCategory}
               status={formik.errors.category && "error"}
               onChange={(_, e) => formik.setFieldValue("category", e.value)}
               value={formik.values.category}
+              defaultValue={undefined}
             >
               {map(categories, (category) => (
                 <Option key={category.id} value={category.id}>
@@ -201,19 +225,26 @@ function ProductForm(props) {
                 </Option>
               ))}
             </Select>
-            <span className="form-add-edit__error-label">
-              {formik.errors.category}
-            </span>
           </Form.Item>
         </Col>
         <Col span={screens.md ? 12 : 24}>
-          <Form.Item>
+          <Form.Item
+            label={
+              <Space>
+                <ApartmentOutlined />
+                <span>Depósito</span>
+              </Space>
+            }
+            validateStatus={formik.errors.category ? "error" : ""}
+            help={formik.errors.category}
+          >
             <Select
-              placeholder="Selecciona un Deposito"
-              loading={loadingData}
+              placeholder="Selecciona un Depósito"
+              loading={loadingDeposit}
               status={formik.errors.deposit && "error"}
               onChange={(_, e) => formik.setFieldValue("deposit", e.value)}
               value={formik.values.deposit}
+              defaultValue={undefined}
             >
               {map(deposits, (deposit) => (
                 <Option key={deposit.id} value={deposit.id}>
@@ -221,16 +252,24 @@ function ProductForm(props) {
                 </Option>
               ))}
             </Select>
-            <span className="form-add-edit__error-label">
-              {formik.errors.deposit}
-            </span>
           </Form.Item>
         </Col>
       </Row>
-      <Form.Item>
-        <Button type="primary" htmlType="submit" className="btn-submit">
-          {isUndefined(product) ? "Crear Producto" : "Actualizar Producto"}
-        </Button>
+      <Form.Item className="form-add-edit__actions">
+        <Space>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className={
+              isUndefined(product) ? "btn-submit-add" : "btn-submit-update"
+            }
+          >
+            {isUndefined(product) ? "Crear Producto" : "Actualizar Producto"}
+          </Button>
+          <Button type="primary" danger onClick={onClose}>
+            Cancelar
+          </Button>
+        </Space>
       </Form.Item>
     </Form>
   );

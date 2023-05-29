@@ -7,8 +7,8 @@ export function initialValuesProduct(data) {
     description: data?.description || "",
     price: data?.price || "",
     stock: data?.stock || 0,
-    category: data?.category || "",
-    deposit: data?.deposit || "",
+    category: data?.id_category || undefined,
+    deposit: data?.id_deposit || undefined,
   };
 }
 
@@ -67,6 +67,7 @@ export function updateSchemaProduct(data) {
       .required("El deposito es obligatorio"),
   };
 }
+
 export function addSchemaProduct() {
   return {
     name: Yup.string()

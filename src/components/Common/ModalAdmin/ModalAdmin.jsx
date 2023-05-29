@@ -4,9 +4,11 @@ import { Modal } from "antd";
 import "./ModalAdmin.scss";
 
 export function ModalAdmin(props) {
-  const { children, title, show, width, onClose, ...other } = props;
+  const { children, title, show, width, onClose, actionModal, ...other } =
+    props;
   return (
     <Modal
+      className={`modal-admin${actionModal && `-${actionModal}`}`}
       title={title}
       open={show}
       width={width}

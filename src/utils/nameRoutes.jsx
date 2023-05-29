@@ -22,7 +22,7 @@ export const adminRoutesOptions = {
   },
   deposits: {
     path: "/depositos",
-    nameMenuSider: "Depositos",
+    nameMenuSider: "Depósitos",
     iconMenuSider: <ApartmentOutlined />,
   },
 };

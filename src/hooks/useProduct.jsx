@@ -6,71 +6,70 @@ import {
   getProductsApi,
   updateProductApi,
 } from "../api/product.api";
+import { isUndefined } from "lodash";
 
 export function useProduct() {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [loadingProduct, setLoadingProduct] = useState(false);
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState(undefined);
   //   const auth = useAuth()
-
-  const getProducts = async () => {
+  const getProducts = async (changeActive = undefined) => {
     try {
-      setLoading(true);
+      if (isUndefined(changeActive)) setLoadingProduct(true);
       const response = await getProductsApi();
-      setLoading(false);
+      if (isUndefined(changeActive)) setLoadingProduct(false);
       setProducts(response);
     } catch (err) {
-      setLoading(false);
-      setError(err);
+      setLoadingProduct(false);
+      throw err;
     }
   };
 
   const getProductById = async (id) => {
     try {
-      setLoading(true);
+      setLoadingProduct(true);
       const response = await getProductByIdApi(id);
-      setLoading(false);
+      setLoadingProduct(false);
       setProduct(response);
     } catch (err) {
-      setLoading(false);
-      setError(err);
+      setLoadingProduct(false);
+      throw err;
     }
   };
 
   const addProduct = async (data) => {
     try {
-      setLoading(true);
+      setLoadingProduct(true);
       const response = await addProductApi(data); //auth.token
-      setLoading(false);
+      setLoadingProduct(false);
       setProduct(response);
     } catch (err) {
-      setLoading(false);
+      setLoadingProduct(false);
       throw err;
     }
   };
 
-  const updateProduct = async (data) => {
+  const updateProduct = async (id, data, changeActive = undefined) => {
     try {
-      setLoading(true);
-      const response = await updateProductApi(data); //auth.token
-      setLoading(false);
-      setProduct(response);
+      if (isUndefined(changeActive)) setLoadingProduct(true);
+      const response = await updateProductApi(id, data); //auth.token
+      if (isUndefined(changeActive)) setLoadingProduct(false);
+      if (isUndefined(changeActive)) setProduct(response);
     } catch (err) {
-      setLoading(false);
-      setError(err);
+      setLoadingProduct(false);
+      throw err;
     }
   };
 
-  const deleteProduct = async (data) => {
+  const deleteProduct = async (id) => {
     try {
-      setLoading(true);
-      const response = await deleteProductApi(data); //auth.token
-      setLoading(false);
+      setLoadingProduct(true);
+      const response = await deleteProductApi(id); //auth.token
+      setLoadingProduct(false);
       setProduct(response);
     } catch (err) {
-      setLoading(false);
-      setError(err);
+      setLoadingProduct(false);
+      throw err;
     }
   };
 
@@ -80,8 +79,7 @@ export function useProduct() {
     addProduct,
     updateProduct,
     deleteProduct,
-    loading,
-    error,
+    loadingProduct,
     products,
     product,
   };
