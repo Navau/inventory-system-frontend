@@ -1,0 +1,43 @@
+@import "../../../scss/colors.scss";
+.header-layout-admin {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 0 20px;
+  .button-collapsed-menu {
+    font-size: 16px;
+    width: 64px;
+    height: 64px;
+  }
+  &__options {
+    .button-change-theme {
+      .bulb-off {
+        color: $icon-theme-black;
+      }
+      .bulb-on {
+        color: $icon-theme-light;
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .button-collapsed-menu {
+      font-size: 8px;
+      width: 16px;
+      height: 16px;
+    }
+    &__options {
+      .button-change-theme {
+        font-size: 8px;
+        width: 16px;
+        height: 16px;
+        .bulb-off {
+          color: $icon-theme-black;
+        }
+        .bulb-on {
+          color: $icon-theme-light;
+        }
+      }
+    }
+  }
+}

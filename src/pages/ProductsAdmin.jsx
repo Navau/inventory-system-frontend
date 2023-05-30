@@ -8,19 +8,34 @@ import {
 } from "../components/Admin";
 import { Loader, ModalAdmin } from "../components/Common";
 import { renderError, renderMessageAction } from "../utils/renderHelpers";
+import { PlusOutlined, ReloadOutlined } from "@ant-design/icons";
 
 export function ProductsAdmin() {
-  const { getProducts, products, loadingProduct, updateProduct } = useProduct();
+  const {
+    getProducts,
+    searchProducts,
+    products,
+    loadingProduct,
+    loadingSearchProduct,
+    updateProduct,
+  } = useProduct();
   const [active, setActive] = useState(undefined);
   const [titleModal, setTitleModal] = useState(undefined);
   const [showModal, setShowModal] = useState(false);
   const [contentModal, setContentModal] = useState(undefined);
   const [refetch, setRefetch] = useState(false);
   const [actionModal, setActionModal] = useState(undefined);
+  const [searchProduct, setSearchProduct] = useState("");
 
   useEffect(() => {
     getProducts(active).catch((err) => renderError(err, "products", "getAll"));
   }, [refetch]);
+
+  useEffect(() => {
+    searchProducts(searchProduct).catch((err) =>
+      renderError(err, "products", "search")
+    );
+  }, [searchProduct]);
 
   const openCloseModal = () => setShowModal((prev) => !prev);
   const onRefetch = () => setRefetch((prev) => !prev);
@@ -84,15 +99,37 @@ export function ProductsAdmin() {
         <>
           <MyHeaderPage
             title="Productos"
-            btnTitle="Nuevo Producto"
-            btnClick={onAddProduct}
+            btnOptions={[
+              {
+                title: "Nuevo Producto",
+                type: "primary",
+                onClick: onAddProduct,
+                icon: <PlusOutlined />,
+              },
+              {
+                title: "Recargar Registros",
+                type: "primary",
+                onClick: onRefetch,
+                icon: <ReloadOutlined />,
+              },
+            ]}
+            inputOptions={[
+              {
+                title: "Busca algún producto",
+                onSearch: setSearchProduct,
+              },
+            ]}
           />
-          <TableProductsAdmin
-            products={products}
-            onChangeActiveProduct={onChangeActiveProduct}
-            onUpdateProduct={onUpdateProduct}
-            onDeleteProduct={onDeleteProduct}
-          />
+          {loadingSearchProduct ? (
+            <Loader />
+          ) : (
+            <TableProductsAdmin
+              products={products}
+              onChangeActiveProduct={onChangeActiveProduct}
+              onUpdateProduct={onUpdateProduct}
+              onDeleteProduct={onDeleteProduct}
+            />
+          )}
         </>
       )}
       <ModalAdmin

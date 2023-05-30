@@ -4,12 +4,14 @@ import {
   deleteProductApi,
   getProductByIdApi,
   getProductsApi,
+  searchProductsApi,
   updateProductApi,
 } from "../api/product.api";
 import { isUndefined } from "lodash";
 
 export function useProduct() {
   const [loadingProduct, setLoadingProduct] = useState(false);
+  const [loadingSearchProduct, setLoadingSearchProduct] = useState(false);
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState(undefined);
   //   const auth = useAuth()
@@ -21,6 +23,18 @@ export function useProduct() {
       setProducts(response);
     } catch (err) {
       setLoadingProduct(false);
+      throw err;
+    }
+  };
+
+  const searchProducts = async (search) => {
+    try {
+      setLoadingSearchProduct(true);
+      const response = await searchProductsApi(search);
+      setLoadingSearchProduct(false);
+      setProducts(response);
+    } catch (err) {
+      setLoadingSearchProduct(false);
       throw err;
     }
   };
@@ -76,10 +90,12 @@ export function useProduct() {
   return {
     getProducts,
     getProductById,
+    searchProducts,
     addProduct,
     updateProduct,
     deleteProduct,
     loadingProduct,
+    loadingSearchProduct,
     products,
     product,
   };

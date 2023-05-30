@@ -21,17 +21,52 @@ export const productsColumnsTable = (
       dataIndex: "id",
       key: "id",
       sorter: (a, b) => a.id - b.id,
+      // responsive: ["md"],
     },
-    { title: "Nombre", dataIndex: "name", key: "name" },
-    { title: "Precio", dataIndex: "price", key: "price" },
-    { title: "Cantidad", dataIndex: "stock", key: "stock" },
-    { title: "Ultima actualización", dataIndex: "update_at", key: "update_at" },
-    { title: "Deposito", dataIndex: "deposit", key: "deposit" },
-    { title: "Categoría", dataIndex: "category", key: "category" },
+    {
+      title: "Nombre",
+      dataIndex: "name",
+      key: "name",
+      // responsive: ["sm"],
+    },
+    {
+      title: "Precio",
+      dataIndex: "price",
+      key: "price",
+      sorter: (a, b) => a.price - b.price,
+      responsive: ["sm"],
+    },
+    {
+      title: "Cantidad",
+      dataIndex: "stock",
+      key: "stock",
+      sorter: (a, b) => a.stock - b.stock,
+      responsive: ["sm"],
+    },
+    {
+      title: "Ultima actualización",
+      dataIndex: "update_at",
+      key: "update_at",
+      sorter: (a, b) => new Date(a.update_at) - new Date(b.update_at),
+      responsive: ["lg"],
+    },
+    {
+      title: "Depósito",
+      dataIndex: "deposit",
+      key: "deposit",
+      responsive: ["lg"],
+    },
+    {
+      title: "Categoría",
+      dataIndex: "category",
+      key: "category",
+      responsive: ["md"],
+    },
     {
       title: "Acciones",
       dataIndex: "actions",
       key: "actions",
+      // responsive: ["sm"],
       render: (text, record) => {
         return (
           <Space wrap>

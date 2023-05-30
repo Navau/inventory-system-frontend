@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { map } from "lodash";
 import routes from "./routes";
 
-export function Navigation() {
+export function Navigation(props) {
+  const { themeDark, setThemeDark } = props;
   return (
     <Router>
       <Routes>
@@ -13,7 +14,7 @@ export function Navigation() {
             key={index}
             path={route.path}
             element={
-              <route.layout>
+              <route.layout themeDark={themeDark} setThemeDark={setThemeDark}>
                 <route.component />
               </route.layout>
             }

@@ -8,10 +8,7 @@ import { map } from "lodash";
 import { useMediaQuery } from "react-responsive";
 
 export function MenuSider() {
-  const { Sider } = Layout;
   const location = useLocation();
-  const [collapsed, setCollapsed] = useState(true);
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
 
   const menuItems = map(adminRoutesOptions, (route, index) => {
     return getItem(
@@ -24,20 +21,12 @@ export function MenuSider() {
   });
 
   return (
-    <Sider
-      className="menu-sider"
-      collapsible
-      collapsed={isTabletOrMobile}
-      trigger={null}
-    >
-      <Menu
-        defaultSelectedKeys={location.pathname}
-        mode="inline"
-        theme="dark"
-        items={menuItems}
-      />
-      {/* <Button onClick={() => setCollapsed(!collapsed)}>TOGGLE</Button> */}
-    </Sider>
+    <Menu
+      defaultSelectedKeys={location.pathname}
+      mode="inline"
+      // theme="dark"
+      items={menuItems}
+    />
   );
 }
 

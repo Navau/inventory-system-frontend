@@ -7,6 +7,7 @@ export const myMessagesError = (typeError, action) => {
       add: "Error al agregar la categoría en el servidor",
       update: "Error al actualizar la categoría en el servidor",
       delete: "Error al eliminar la categoría en el servidor",
+      search: "Error al buscar las categorías del servidor",
     },
     deposit: {
       getOne: "Error al obtener el depósito del servidor",
@@ -14,6 +15,7 @@ export const myMessagesError = (typeError, action) => {
       add: "Error al agregar el depósito en el servidor",
       update: "Error al actualizar el depósito en el servidor",
       delete: "Error al eliminar el depósito en el servidor",
+      search: "Error al buscar los depósitos del servidor",
     },
     product: {
       getOne: "Error al obtener el producto del servidor",
@@ -21,6 +23,7 @@ export const myMessagesError = (typeError, action) => {
       add: "Error al agregar el producto en el servidor",
       update: "Error al actualizar el producto en el servidor",
       delete: "Error al eliminar el producto en el servidor",
+      search: "Error al buscar los productos del servidor",
     },
   };
 

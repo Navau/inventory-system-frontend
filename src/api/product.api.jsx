@@ -19,6 +19,26 @@ export async function getProductsApi() {
   }
 }
 
+export async function searchProductsApi(search) {
+  try {
+    const url = `${BASE_API}/api/products/?search=${encodeURIComponent(
+      search
+    )}`;
+    return await axios
+      .get(url)
+      .then((response) => {
+        const result = response.data;
+        const status = response?.status;
+        return result;
+      })
+      .catch((err) => {
+        throw err;
+      });
+  } catch (err) {
+    throw err;
+  }
+}
+
 export async function getProductByIdApi(id) {
   try {
     const url = `${BASE_API}/api/products/${id}/`;

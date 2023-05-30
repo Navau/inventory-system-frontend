@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { ConfigProvider, theme } from "antd";
 import { Navigation } from "./routes";
 import "./App.scss";
 
 export default function App() {
-  // theme={
-  //   {
-  //     // algorithm: theme.darkAlgorithm,
-  //   }
-  // }
+  const [themeDark, setThemeDark] = useState(false);
   return (
-    <ConfigProvider>
-      <Navigation />
+    <ConfigProvider
+      theme={{
+        algorithm: themeDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
+      }}
+    >
+      <Navigation themeDark={themeDark} setThemeDark={setThemeDark} />
     </ConfigProvider>
   );
 }
