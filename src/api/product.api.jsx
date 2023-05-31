@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_API, TYPE_TOKEN } from "../utils";
+import { isEmpty, isUndefined } from "lodash";
 
 export async function getProductsApi() {
   try {
@@ -19,11 +20,16 @@ export async function getProductsApi() {
   }
 }
 
-export async function searchProductsApi(search) {
+export async function searchProductsApi(search, active) {
   try {
-    const url = `${BASE_API}/api/products/?search=${encodeURIComponent(
-      search
-    )}`;
+    let url = "";
+    url += `${BASE_API}/api/products/`;
+    url += !isEmpty(search) ? `?search=${encodeURIComponent(search)}` : "";
+    url += !isUndefined(active)
+      ? isEmpty(search)
+        ? `?active=${active}`
+        : `&active=${active}`
+      : "";
     return await axios
       .get(url)
       .then((response) => {

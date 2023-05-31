@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Input, Space, Typography } from "antd";
+import { Button, Form, Input, Radio, Space, Typography } from "antd";
 import { isEmpty, map, size } from "lodash";
 import { useSizeScreen } from "../../../hooks";
 
@@ -24,11 +24,29 @@ export function MyHeaderPage(props) {
                   placeholder={input.title}
                   allowClear
                   enterButton="Buscar"
+                  onBlur={(e) => input.onSearch(e.target.value)}
                   onSearch={(value) => input.onSearch(value)}
                   // onChange={(e) =>
                   //   !isEmpty(e.target.value) && input.onSearch(e.target.value)
                   // }
                 />
+                {size(input?.filters) > 0 && (
+                  <>
+                    {input?.filter.type === "search" && (
+                      <Radio.Group
+                        className="filter-radio-group"
+                        onChange={input?.filter.set}
+                        value={input?.filter.get}
+                      >
+                        {map(input.filters, (filter, indexFilter) => (
+                          <Radio key={indexFilter} value={filter.value}>
+                            {filter.content}
+                          </Radio>
+                        ))}
+                      </Radio.Group>
+                    )}
+                  </>
+                )}
               </Form.Item>
             ))}
           </Space>

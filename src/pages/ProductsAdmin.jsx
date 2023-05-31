@@ -5,6 +5,7 @@ import {
   MyHeaderPage,
   AddEditProductFormAdmin,
   DeleteProductFormAdmin,
+  ProductDashboardAdmin,
 } from "../components/Admin";
 import { Loader, ModalAdmin } from "../components/Common";
 import { renderError, renderMessageAction } from "../utils/renderHelpers";
@@ -26,20 +27,25 @@ export function ProductsAdmin() {
   const [refetch, setRefetch] = useState(false);
   const [actionModal, setActionModal] = useState(undefined);
   const [searchProduct, setSearchProduct] = useState("");
+  const [searchProductAux, setSearchProductAux] = useState(false);
+  const [searchOptionFilter, setSearchOptionFilter] = useState(undefined);
 
   useEffect(() => {
     getProducts(active).catch((err) => renderError(err, "products", "getAll"));
   }, [refetch]);
 
   useEffect(() => {
-    searchProducts(searchProduct).catch((err) =>
+    searchProducts(searchProduct, searchOptionFilter).catch((err) =>
       renderError(err, "products", "search")
     );
-  }, [searchProduct]);
+  }, [searchProduct, searchProductAux]);
 
   const openCloseModal = () => setShowModal((prev) => !prev);
   const onRefetch = () => setRefetch((prev) => !prev);
-
+  const handleSearchOptionChange = (e) => {
+    setSearchOptionFilter(e.target.value);
+    setSearchProductAux((prev) => !prev);
+  };
   const onAddProduct = () => {
     setActionModal("add");
     setTitleModal("Nuevo Producto: ¡Agrega tus detalles!");
@@ -86,6 +92,7 @@ export function ProductsAdmin() {
         renderError(err, "product", "update");
       })
       .finally(() => {
+        setSearchOptionFilter(undefined);
         setActive(true);
         onRefetch();
       });
@@ -117,6 +124,16 @@ export function ProductsAdmin() {
               {
                 title: "Busca algún producto",
                 onSearch: setSearchProduct,
+                filter: {
+                  type: "search",
+                  get: searchOptionFilter,
+                  set: handleSearchOptionChange,
+                },
+                filters: [
+                  { value: undefined, content: "Todos" },
+                  { value: true, content: "Activos" },
+                  { value: false, content: "Inactivos" },
+                ],
               },
             ]}
           />
@@ -130,6 +147,7 @@ export function ProductsAdmin() {
               onDeleteProduct={onDeleteProduct}
             />
           )}
+          <ProductDashboardAdmin />
         </>
       )}
       <ModalAdmin

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_API, TYPE_TOKEN } from "../utils";
-import { isEmpty, map, size } from "lodash";
+import { isEmpty, isUndefined, map, size } from "lodash";
 
 export async function getCategoriesApi(filters = {}) {
   try {
@@ -25,11 +25,16 @@ export async function getCategoriesApi(filters = {}) {
   }
 }
 
-export async function searchCategoriesApi(search) {
+export async function searchCategoriesApi(search, active) {
   try {
-    const url = `${BASE_API}/api/categories/?search=${encodeURIComponent(
-      search
-    )}`;
+    let url = "";
+    url += `${BASE_API}/api/categories/`;
+    url += !isEmpty(search) ? `?search=${encodeURIComponent(search)}` : "";
+    url += !isUndefined(active)
+      ? isEmpty(search)
+        ? `?active=${active}`
+        : `&active=${active}`
+      : "";
     return await axios
       .get(url)
       .then((response) => {

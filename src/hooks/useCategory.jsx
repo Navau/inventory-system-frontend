@@ -39,10 +39,10 @@ export function useCategory() {
     }
   };
 
-  const searchCategories = async (search) => {
+  const searchCategories = async (search, active) => {
     try {
       setLoadingSearchCategory(true);
-      const response = await searchCategoriesApi(search);
+      const response = await searchCategoriesApi(search, active);
       setLoadingSearchCategory(false);
       setCategories(response);
     } catch (err) {

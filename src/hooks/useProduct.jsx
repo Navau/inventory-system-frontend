@@ -27,10 +27,10 @@ export function useProduct() {
     }
   };
 
-  const searchProducts = async (search) => {
+  const searchProducts = async (search, active) => {
     try {
       setLoadingSearchProduct(true);
-      const response = await searchProductsApi(search);
+      const response = await searchProductsApi(search, active);
       setLoadingSearchProduct(false);
       setProducts(response);
     } catch (err) {

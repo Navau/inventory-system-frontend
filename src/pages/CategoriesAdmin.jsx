@@ -27,6 +27,8 @@ export function CategoriesAdmin() {
   const [refetch, setRefetch] = useState(false);
   const [actionModal, setActionModal] = useState(undefined);
   const [searchCategory, setSearchCategory] = useState("");
+  const [searchCategoryAux, setSearchCategoryAux] = useState(false);
+  const [searchOptionFilter, setSearchOptionFilter] = useState(undefined);
 
   useEffect(() => {
     getCategories(active).catch((err) =>
@@ -35,13 +37,17 @@ export function CategoriesAdmin() {
   }, [refetch]);
 
   useEffect(() => {
-    searchCategories(searchCategory).catch((err) =>
+    searchCategories(searchCategory, searchOptionFilter).catch((err) =>
       renderError(err, "categories", "search")
     );
-  }, [searchCategory]);
+  }, [searchCategory, searchCategoryAux]);
 
   const openCloseModal = () => setShowModal((prev) => !prev);
   const onRefetch = () => setRefetch((prev) => !prev);
+  const handleSearchOptionChange = (e) => {
+    setSearchOptionFilter(e.target.value);
+    setSearchCategoryAux((prev) => !prev);
+  };
 
   const onAddCategory = () => {
     setActionModal("add");
@@ -93,6 +99,7 @@ export function CategoriesAdmin() {
           renderError(err, "category", "update");
         })
         .finally(() => {
+          setSearchOptionFilter(undefined);
           setActive(true);
           onRefetch();
           category.active === true && openCloseModal();
@@ -138,6 +145,16 @@ export function CategoriesAdmin() {
               {
                 title: "Busca alguna categoría",
                 onSearch: setSearchCategory,
+                filter: {
+                  type: "search",
+                  get: searchOptionFilter,
+                  set: handleSearchOptionChange,
+                },
+                filters: [
+                  { value: undefined, content: "Todos" },
+                  { value: true, content: "Activos" },
+                  { value: false, content: "Inactivos" },
+                ],
               },
             ]}
           />

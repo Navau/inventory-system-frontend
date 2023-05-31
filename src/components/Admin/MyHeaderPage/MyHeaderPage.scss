@@ -1,3 +1,5 @@
+@import "../../../scss/colors.scss";
+
 .my-header-page-admin {
   padding-bottom: 30px;
   &__actions {
@@ -10,8 +12,13 @@
     justify-content: space-around;
     flex-direction: column;
     align-items: center;
+
     .ant-form-item {
       margin: 0;
+    }
+    .filter-radio-group {
+      margin: 20px 0 0 20px;
+      display: flex;
     }
   }
   &__buttons {
@@ -28,6 +35,19 @@
     }
   }
   @media (max-width: 768px) {
+    .ant-form-item {
+      border: 2px solid $dodger-blue-medium-transparent;
+      padding: 10px;
+    }
+    &__inputs {
+      .filter-radio-group {
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: column;
+        align-items: flex-end;
+        margin: 10px 0 0 0;
+      }
+    }
     &__actions {
       display: flex;
       justify-content: space-around;
