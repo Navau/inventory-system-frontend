@@ -1,9 +1,15 @@
 import axios from "axios";
 import { BASE_API, TYPE_TOKEN } from "../utils";
+import { isEmpty, map } from "lodash";
 
-export async function getDepositsApi() {
+export async function getDepositsApi(filters = {}) {
   try {
-    const url = `${BASE_API}/api/deposits/`;
+    const stringFilters = map(filters, (value, index) => {
+      return `${index}=${value}`;
+    }).join("&");
+    const url = `${BASE_API}/api/deposits/${
+      !isEmpty(stringFilters) ? `?${stringFilters}` : ""
+    }`;
     return await axios
       .get(url)
       .then((response) => {

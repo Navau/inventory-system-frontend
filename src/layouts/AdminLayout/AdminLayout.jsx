@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Layout, theme } from "antd";
-import { useMediaQuery } from "react-responsive";
+import { useSizeScreen } from "../../hooks";
 import { HeaderLayoutAdmin, MenuSider } from "../../components/Admin";
 import "./AdminLayout.scss";
 
@@ -9,9 +9,7 @@ export function AdminLayout(props) {
   const { Content, Sider, Header } = Layout;
   const [collapsed, setCollapsed] = useState(true);
   const [isBroken, setIsBroken] = useState(false);
-  const isLittleMobile = useMediaQuery({
-    query: "(min-width: 280px) and (max-width: 360px)",
-  });
+  const { isLittleMobile } = useSizeScreen();
   const classNameCollapsed = () => {
     if (isLittleMobile === true) {
       if (collapsed === true) return "menu-short-mobile";
@@ -44,7 +42,7 @@ export function AdminLayout(props) {
           background: colorBgContainer,
         }}
       >
-        <MenuSider />
+        <MenuSider setCollapsed={setCollapsed} />
       </Sider>
       <Layout className={classNameCollapsed()}>
         <Header

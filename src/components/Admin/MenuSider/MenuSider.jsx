@@ -1,18 +1,23 @@
-import React, { useState } from "react";
-import { Menu, Layout, Button } from "antd";
-
-import "./MenuSider.scss";
+import React, { useEffect, useState } from "react";
+import { Menu } from "antd";
 import { Link, useLocation } from "react-router-dom";
 import { adminRoutesOptions } from "../../../utils/nameRoutes";
-import { map } from "lodash";
-import { useMediaQuery } from "react-responsive";
+import { map, size } from "lodash";
 
-export function MenuSider() {
+import "./MenuSider.scss";
+import { useSizeScreen } from "../../../hooks";
+
+export function MenuSider(props) {
+  const { setCollapsed } = props;
   const location = useLocation();
+  const { isTabletOrMobile } = useSizeScreen();
 
   const menuItems = map(adminRoutesOptions, (route, index) => {
     return getItem(
-      <Link to={route.path}>
+      <Link
+        to={route.path}
+        onClick={() => isTabletOrMobile && setCollapsed(true)}
+      >
         <span className="menu-sider__nav-text">{route.nameMenuSider}</span>
       </Link>,
       index,
@@ -22,9 +27,8 @@ export function MenuSider() {
 
   return (
     <Menu
-      defaultSelectedKeys={location.pathname}
+      defaultSelectedKeys={[location.pathname]}
       mode="inline"
-      // theme="dark"
       items={menuItems}
     />
   );

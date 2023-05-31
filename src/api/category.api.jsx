@@ -1,9 +1,35 @@
 import axios from "axios";
 import { BASE_API, TYPE_TOKEN } from "../utils";
+import { isEmpty, map, size } from "lodash";
 
-export async function getCategoriesApi() {
+export async function getCategoriesApi(filters = {}) {
   try {
-    const url = `${BASE_API}/api/categories/`;
+    const stringFilters = map(filters, (value, index) => {
+      return `${index}=${value}`;
+    }).join("&");
+    const url = `${BASE_API}/api/categories/${
+      !isEmpty(stringFilters) ? `?${stringFilters}` : ""
+    }`;
+    return await axios
+      .get(url)
+      .then((response) => {
+        const result = response.data;
+        const status = response?.status;
+        return result;
+      })
+      .catch((err) => {
+        throw err;
+      });
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function searchCategoriesApi(search) {
+  try {
+    const url = `${BASE_API}/api/categories/?search=${encodeURIComponent(
+      search
+    )}`;
     return await axios
       .get(url)
       .then((response) => {

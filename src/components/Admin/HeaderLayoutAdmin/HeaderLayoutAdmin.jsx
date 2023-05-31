@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, Space, Typography } from "antd";
-import { useMediaQuery } from "react-responsive";
+import { Button, Space } from "antd";
 import {
   BulbFilled,
   BulbOutlined,
@@ -8,11 +7,12 @@ import {
   MenuUnfoldOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { useSizeScreen } from "../../../hooks";
 import "./HeaderLayoutAdmin.scss";
 
 export function HeaderLayoutAdmin(props) {
   const { collapsed, setCollapsed, themeDark, setThemeDark } = props;
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+  const { isTabletOrMobile } = useSizeScreen();
   return (
     <Space wrap className="header-layout-admin">
       <Button

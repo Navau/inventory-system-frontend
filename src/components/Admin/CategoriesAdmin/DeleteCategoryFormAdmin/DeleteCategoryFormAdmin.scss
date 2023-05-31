@@ -1,0 +1,63 @@
+.delete-category-form-admin {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  &__actions {
+    justify-content: center;
+    margin-top: 25px;
+    .ant-space-item {
+      width: 40%;
+      button {
+        width: 100%;
+      }
+    }
+  }
+  .ant-descriptions {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+  .ant-descriptions-header {
+    margin-bottom: 10px;
+    .ant-descriptions-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+  .ant-descriptions-view {
+    width: 70%;
+    .ant-descriptions-row {
+      .ant-descriptions-item-label,
+      .ant-descriptions-item-content {
+        padding: 5px !important;
+        span {
+          font-size: 0.8rem;
+        }
+      }
+      .ant-descriptions-item-label {
+        span {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .ant-descriptions-view {
+      width: 100%;
+    }
+    &__actions {
+      flex-direction: column-reverse;
+      .ant-space {
+        flex-direction: column;
+        .ant-space-item {
+          max-width: 100%;
+          button {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

@@ -34,3 +34,9 @@
     background-color: $danger-red;
   }
 }
+
+.modal-admin-active {
+  .ant-modal-title {
+    background-color: $warning-yellow;
+  }
+}

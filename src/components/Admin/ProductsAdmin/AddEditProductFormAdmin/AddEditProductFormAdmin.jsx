@@ -19,17 +19,18 @@ import {
   updateSchemaProduct,
 } from "./AddEditProductFormAdmin.validations";
 
-import "./AddEditProductFormAdmin.scss";
 import {
   renderError,
   renderMessageAction,
 } from "../../../../utils/renderHelpers";
 
+import "./AddEditProductFormAdmin.scss";
+
 export function AddEditProductFormAdmin(props) {
   const { onClose, onRefetch, product = undefined } = props;
   const { addProduct, updateProduct } = useProduct();
-  const { loadingCategory, categories, getCategories } = useCategory();
-  const { loadingDeposit, deposits, getDeposits } = useDeposit();
+  const { loadingCategory, categories, getCategoriesByFilters } = useCategory();
+  const { loadingDeposit, deposits, getDepositsByFilters } = useDeposit();
 
   //TO DO: verificar porque tarda tanto al cargar junto al modal
   // useEffect(() => {
@@ -43,11 +44,11 @@ export function AddEditProductFormAdmin(props) {
   // }, [product]);
   useEffect(() => {
     (async () => {
-      await getCategories().catch((err) =>
-        renderError(err, "categories", "getAll")
+      await getCategoriesByFilters({ active: true }).catch((err) =>
+        renderError(err, "category", "getAll")
       );
-      await getDeposits().catch((err) =>
-        renderError(err, "deposits", "getAll")
+      await getDepositsByFilters({ active: true }).catch((err) =>
+        renderError(err, "deposit", "getAll")
       );
     })();
   }, [product]);
@@ -96,7 +97,7 @@ function ProductForm(props) {
     onSubmit: async (formValue) => {
       try {
         if (isUndefined(product)) {
-          await addProduct();
+          await addProduct(formValue);
           renderMessageAction("add", "Product");
         } else {
           const id = product?.id || -1;
@@ -235,8 +236,8 @@ function ProductForm(props) {
                 <span>Depósito</span>
               </Space>
             }
-            validateStatus={formik.errors.category ? "error" : ""}
-            help={formik.errors.category}
+            validateStatus={formik.errors.deposit ? "error" : ""}
+            help={formik.errors.deposit}
           >
             <Select
               placeholder="Selecciona un Depósito"

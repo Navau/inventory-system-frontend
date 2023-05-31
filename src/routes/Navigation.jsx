@@ -15,7 +15,7 @@ export function Navigation(props) {
             path={route.path}
             element={
               <route.layout themeDark={themeDark} setThemeDark={setThemeDark}>
-                <route.component />
+                <route.component themeDark={themeDark} />
               </route.layout>
             }
           />

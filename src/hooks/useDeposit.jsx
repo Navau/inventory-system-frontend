@@ -25,6 +25,18 @@ export function useDeposit() {
     }
   };
 
+  const getDepositsByFilters = async (filters) => {
+    try {
+      setLoadingDeposit(true);
+      const response = await getDepositsApi(filters);
+      setLoadingDeposit(false);
+      setDeposits(response);
+    } catch (err) {
+      setLoadingDeposit(false);
+      throw err;
+    }
+  };
+
   const getDepositById = async () => {
     try {
       setLoadingDeposit(true);
@@ -76,6 +88,7 @@ export function useDeposit() {
   return {
     getDeposits,
     getDepositById,
+    getDepositsByFilters,
     addDeposit,
     updateDeposit,
     deleteDeposit,

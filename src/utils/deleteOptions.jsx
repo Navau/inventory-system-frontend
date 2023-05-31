@@ -69,3 +69,32 @@ export const descriptionsDeleteProduct = (product) => {
     },
   };
 };
+
+export const descriptionsDeleteCategory = (product) => {
+  return {
+    código: {
+      title: (
+        <Space>
+          <IdcardOutlined /> <span>Código</span>
+        </Space>
+      ),
+      content: product.id,
+    },
+    producto: {
+      title: (
+        <Space>
+          <TagOutlined /> <span>Categoría</span>
+        </Space>
+      ),
+      content: product.name,
+    },
+    "creado en": {
+      title: (
+        <Space>
+          <ClockCircleOutlined /> <span>Creado en</span>
+        </Space>
+      ),
+      content: product.created_at,
+    },
+  };
+};

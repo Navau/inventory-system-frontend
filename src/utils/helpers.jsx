@@ -1,3 +1,6 @@
+import React from "react";
+import { useMediaQuery } from "react-responsive";
+
 export const myMessagesError = (typeError, action) => {
   const msgDefault = `Error de conexión (${action} ${typeError}): No se pudo obtener datos del servidor`;
   const MESSAGES = {

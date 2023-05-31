@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form, Input, Space, Typography } from "antd";
-import { useMediaQuery } from "react-responsive";
-import { map, size } from "lodash";
+import { isEmpty, map, size } from "lodash";
+import { useSizeScreen } from "../../../hooks";
 
 import "./MyHeaderPage.scss";
 
 export function MyHeaderPage(props) {
   const { title, btnOptions, inputOptions } = props;
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+  const { isTabletOrMobile } = useSizeScreen();
   return (
     <div className="my-header-page-admin">
       <Typography.Title level={2}>{title}</Typography.Title>
@@ -18,13 +18,16 @@ export function MyHeaderPage(props) {
               <Form.Item
                 key={index}
                 label={!isTabletOrMobile ? input.title : null}
-                tooltip="Presioné enter para ejecutar la busqueda o presione en el icono de busqueda"
+                tooltip="Presione Enter para ejecutar la búsqueda o haga clic en el botón de búsqueda"
               >
                 <Input.Search
                   placeholder={input.title}
                   allowClear
                   enterButton="Buscar"
                   onSearch={(value) => input.onSearch(value)}
+                  // onChange={(e) =>
+                  //   !isEmpty(e.target.value) && input.onSearch(e.target.value)
+                  // }
                 />
               </Form.Item>
             ))}
