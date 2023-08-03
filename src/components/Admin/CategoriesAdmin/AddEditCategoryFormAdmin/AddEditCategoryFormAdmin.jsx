@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useCategory } from "../../../../hooks";
-import { Form, Input, Spin, Grid, Col, Row, Select, Button, Space } from "antd";
-import { isUndefined, map } from "lodash";
+import { Form, Input, Col, Row, Button, Space } from "antd";
+import { isUndefined } from "lodash";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { TagOutlined, FileTextOutlined } from "@ant-design/icons";
@@ -26,7 +26,7 @@ export function AddEditCategoryFormAdmin(props) {
   return (
     <div className="add-edit-user-form-admin">
       <CategoryForm
-        category={category}
+        category={initialValuesCategory(category)}
         addCategory={addCategory}
         updateCategory={updateCategory}
         onClose={onClose}
@@ -38,7 +38,6 @@ export function AddEditCategoryFormAdmin(props) {
 
 function CategoryForm(props) {
   const { category, addCategory, updateCategory, onClose, onRefetch } = props;
-
   const formik = useFormik({
     initialValues: initialValuesCategory(category),
     validationSchema: Yup.object(
@@ -51,11 +50,11 @@ function CategoryForm(props) {
       try {
         if (isUndefined(category)) {
           await addCategory(formValue);
-          renderMessageAction("add", "Category");
+          renderMessageAction("Category", "add");
         } else {
           const id = category?.id || -1;
           await updateCategory(id, formValue);
-          renderMessageAction("update", "Category");
+          renderMessageAction("Category", "update");
         }
         onRefetch();
         onClose();
@@ -68,6 +67,10 @@ function CategoryForm(props) {
       }
     },
   });
+
+  useEffect(() => {
+    formik.setValues(initialValuesCategory(category));
+  }, [category]);
 
   return (
     <Form className="form-add-edit" onSubmitCapture={formik.handleSubmit}>
@@ -82,6 +85,7 @@ function CategoryForm(props) {
             }
             validateStatus={formik.errors.name ? "error" : ""}
             help={formik.errors.name}
+            required
           >
             <Input
               name="name"

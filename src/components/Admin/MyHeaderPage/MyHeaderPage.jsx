@@ -10,7 +10,7 @@ export function MyHeaderPage(props) {
   const { isTabletOrMobile } = useSizeScreen();
   return (
     <div className="my-header-page-admin">
-      <Typography.Title level={2}>{title}</Typography.Title>
+      <Typography.Title level={1}>{title}</Typography.Title>
       <Space align="center" className="my-header-page-admin__actions">
         {size(inputOptions) > 0 && (
           <Space align="center" className="my-header-page-admin__inputs">
@@ -60,7 +60,7 @@ export function MyHeaderPage(props) {
                 type={btn.type}
                 onClick={btn.onClick}
               >
-                {btn.title}
+                {!isTabletOrMobile && btn.title}
               </Button>
             ))}
           </Space>

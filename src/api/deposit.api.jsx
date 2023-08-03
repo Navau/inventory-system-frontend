@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_API, TYPE_TOKEN } from "../utils";
-import { isEmpty, map } from "lodash";
+import { isEmpty, isUndefined, map, size } from "lodash";
 
 export async function getDepositsApi(filters = {}) {
   try {
@@ -10,6 +10,31 @@ export async function getDepositsApi(filters = {}) {
     const url = `${BASE_API}/api/deposits/${
       !isEmpty(stringFilters) ? `?${stringFilters}` : ""
     }`;
+    return await axios
+      .get(url)
+      .then((response) => {
+        const result = response.data;
+        const status = response?.status;
+        return result;
+      })
+      .catch((err) => {
+        throw err;
+      });
+  } catch (err) {
+    throw err;
+  }
+}
+
+export async function searchDepositsApi(search, active) {
+  try {
+    let url = "";
+    url += `${BASE_API}/api/deposits/`;
+    url += !isEmpty(search) ? `?search=${encodeURIComponent(search)}` : "";
+    url += !isUndefined(active)
+      ? isEmpty(search)
+        ? `?active=${active}`
+        : `&active=${active}`
+      : "";
     return await axios
       .get(url)
       .then((response) => {

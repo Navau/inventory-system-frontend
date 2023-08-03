@@ -1,6 +1,3 @@
-import React from "react";
-import { useMediaQuery } from "react-responsive";
-
 export const myMessagesError = (typeError, action) => {
   const msgDefault = `Error de conexión (${action} ${typeError}): No se pudo obtener datos del servidor`;
   const MESSAGES = {
@@ -33,8 +30,8 @@ export const myMessagesError = (typeError, action) => {
   return MESSAGES[typeError][action] || msgDefault;
 };
 
-export const codeMessageError = (code, typeError, action) => {
-  const typeErrorMessage = typeError ? `${typeError}` : "";
+export const codeMessageError = (code, section, action) => {
+  const typeErrorMessage = section ? `${section}` : "";
   const actionMessage = action ? `${action}` : "";
   let auxMessage = "";
   auxMessage += translateWord(actionMessage);
@@ -52,6 +49,7 @@ export const codeMessageError = (code, typeError, action) => {
     ERR_GATEWAY_TIMEOUT: `Error ${auxMessage}: Tiempo de espera agotado. La conexión con el servidor se ha perdido.`,
     ERR_NETWORK_ERROR: `Error ${auxMessage}: Error de red. Verifica tu conexión a internet.`,
     ERR_UNKNOWN: `Error ${auxMessage}: Error desconocido. Ocurrió un error inesperado.`,
+    ERR_NETWORK: `Error ${auxMessage}: Error de red. No se pudo establecer conexión con el servidor.`,
   };
   return CODE_MESSAGES[code] || code;
 };
@@ -69,6 +67,7 @@ export const translateWord = (word) => {
     add: "agregar",
     update: "actualizar",
     delete: "eliminar",
+    search: "buscar",
     Product: "Producto",
     Products: "Productos",
     Categories: "Categorías",
@@ -80,6 +79,7 @@ export const translateWord = (word) => {
     Add: "Agregar",
     Update: "Actualizar",
     Delete: "Eliminar",
+    Search: "Buscar",
   };
   return TRANSLATES[word] || word;
 };
@@ -92,4 +92,25 @@ export const myMessagesAction = (action, section) => {
   };
 
   return ACTIONS_MESSAGES[action];
+};
+
+export const getRowClassName = (record) => {
+  return record.active ? "active-row" : "inactive-row";
+};
+export const customLocale = {
+  filterTitle: "Filtrar menú",
+  filterConfirm: "Aceptar",
+  filterReset: "Reiniciar",
+  filterEmptyText: "Sin filtros",
+  emptyText: "Sin datos",
+  selectAll: "Seleccionar todo",
+  selectInvert: "Invertir selección",
+  selectNone: "Vacíe todo",
+  selectionAll: "Seleccionar todos los datos",
+  sortTitle: "Ordenar",
+  expand: "Expandir fila",
+  collapse: "Colapsar fila",
+  triggerDesc: "Click para ordenar en orden descendente",
+  triggerAsc: "Click para ordenar en orden ascendente",
+  cancelSort: "Click para cancelar ordenamiento",
 };

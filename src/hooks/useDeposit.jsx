@@ -4,20 +4,22 @@ import {
   deleteDepositApi,
   getDepositByIdApi,
   getDepositsApi,
+  searchDepositsApi,
   updateDepositApi,
 } from "../api/deposit.api";
+import { isUndefined } from "lodash";
 
 export function useDeposit() {
   const [loadingDeposit, setLoadingDeposit] = useState(false);
+  const [loadingSearchDeposit, setLoadingSearchDeposit] = useState(false);
   const [deposits, setDeposits] = useState([]);
   const [deposit, setDeposit] = useState(undefined);
   //   const auth = useAuth()
-
-  const getDeposits = async () => {
+  const getDeposits = async (changeActive = undefined) => {
     try {
-      setLoadingDeposit(true);
+      if (isUndefined(changeActive)) setLoadingDeposit(true);
       const response = await getDepositsApi();
-      setLoadingDeposit(false);
+      if (isUndefined(changeActive)) setLoadingDeposit(false);
       setDeposits(response);
     } catch (err) {
       setLoadingDeposit(false);
@@ -37,10 +39,22 @@ export function useDeposit() {
     }
   };
 
-  const getDepositById = async () => {
+  const searchDeposits = async (search, active) => {
+    try {
+      setLoadingSearchDeposit(true);
+      const response = await searchDepositsApi(search, active);
+      setLoadingSearchDeposit(false);
+      setDeposits(response);
+    } catch (err) {
+      setLoadingSearchDeposit(false);
+      throw err;
+    }
+  };
+
+  const getDepositById = async (id) => {
     try {
       setLoadingDeposit(true);
-      const response = await getDepositByIdApi();
+      const response = await getDepositByIdApi(id);
       setLoadingDeposit(false);
       setDeposit(response);
     } catch (err) {
@@ -61,12 +75,12 @@ export function useDeposit() {
     }
   };
 
-  const updateDeposit = async (id, data) => {
+  const updateDeposit = async (id, data, changeActive = undefined) => {
     try {
-      setLoadingDeposit(true);
+      if (isUndefined(changeActive)) setLoadingDeposit(true);
       const response = await updateDepositApi(id, data); //auth.token
-      setLoadingDeposit(false);
-      setDeposit(response);
+      if (isUndefined(changeActive)) setLoadingDeposit(false);
+      if (isUndefined(changeActive)) setDeposit(response);
     } catch (err) {
       setLoadingDeposit(false);
       throw err;
@@ -89,10 +103,12 @@ export function useDeposit() {
     getDeposits,
     getDepositById,
     getDepositsByFilters,
+    searchDeposits,
     addDeposit,
     updateDeposit,
     deleteDeposit,
     loadingDeposit,
+    loadingSearchDeposit,
     deposits,
     deposit,
   };

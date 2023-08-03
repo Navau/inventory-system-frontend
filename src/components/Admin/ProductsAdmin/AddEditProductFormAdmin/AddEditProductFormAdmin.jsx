@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useCategory, useDeposit, useProduct } from "../../../../hooks";
 import { Form, Input, Spin, Grid, Col, Row, Select, Button, Space } from "antd";
 import { isUndefined, map } from "lodash";
@@ -98,11 +98,11 @@ function ProductForm(props) {
       try {
         if (isUndefined(product)) {
           await addProduct(formValue);
-          renderMessageAction("add", "Product");
+          renderMessageAction("Product", "add");
         } else {
           const id = product?.id || -1;
           await updateProduct(id, formValue);
-          renderMessageAction("update", "Product");
+          renderMessageAction("Product", "update");
         }
         onRefetch();
         onClose();
@@ -111,6 +111,10 @@ function ProductForm(props) {
       }
     },
   });
+
+  useEffect(() => {
+    formik.setValues(initialValuesProduct(product));
+  }, [product]);
 
   return (
     <Form className="form-add-edit" onSubmitCapture={formik.handleSubmit}>
@@ -125,6 +129,7 @@ function ProductForm(props) {
             }
             validateStatus={formik.errors.name ? "error" : ""}
             help={formik.errors.name}
+            required
           >
             <Input
               name="name"
@@ -167,6 +172,7 @@ function ProductForm(props) {
             }
             validateStatus={formik.errors.price ? "error" : ""}
             help={formik.errors.price}
+            required
           >
             <Input
               name="price"
@@ -188,6 +194,7 @@ function ProductForm(props) {
             }
             validateStatus={formik.errors.stock ? "error" : ""}
             help={formik.errors.stock}
+            required
           >
             <Input
               name="stock"
@@ -211,6 +218,7 @@ function ProductForm(props) {
             }
             validateStatus={formik.errors.category ? "error" : ""}
             help={formik.errors.category}
+            required
           >
             <Select
               placeholder="Selecciona una Categoría"
@@ -238,6 +246,7 @@ function ProductForm(props) {
             }
             validateStatus={formik.errors.deposit ? "error" : ""}
             help={formik.errors.deposit}
+            required
           >
             <Select
               placeholder="Selecciona un Depósito"

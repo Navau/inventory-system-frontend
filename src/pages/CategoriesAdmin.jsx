@@ -10,6 +10,7 @@ import {
 } from "../components/Admin";
 import { Loader, ModalAdmin } from "../components/Common";
 import { renderError, renderMessageAction } from "../utils/renderHelpers";
+import { isEmpty } from "lodash";
 
 export function CategoriesAdmin() {
   const {
@@ -31,16 +32,15 @@ export function CategoriesAdmin() {
   const [searchOptionFilter, setSearchOptionFilter] = useState(undefined);
 
   useEffect(() => {
-    getCategories(active).catch((err) =>
-      renderError(err, "categories", "getAll")
-    );
-  }, [refetch]);
-
-  useEffect(() => {
-    searchCategories(searchCategory, searchOptionFilter).catch((err) =>
-      renderError(err, "categories", "search")
-    );
-  }, [searchCategory, searchCategoryAux]);
+    if (!isEmpty(searchCategory))
+      searchCategories(searchCategory, searchOptionFilter).catch((err) =>
+        renderError(err, "categories", "search")
+      );
+    else
+      getCategories(active).catch((err) =>
+        renderError(err, "categories", "getAll")
+      );
+  }, [refetch, searchCategory, searchCategoryAux]);
 
   const openCloseModal = () => setShowModal((prev) => !prev);
   const onRefetch = () => setRefetch((prev) => !prev);
@@ -56,6 +56,7 @@ export function CategoriesAdmin() {
       <AddEditCategoryFormAdmin
         onClose={openCloseModal}
         onRefetch={onRefetch}
+        typeActionForm="add"
       />
     );
     openCloseModal();
@@ -71,6 +72,7 @@ export function CategoriesAdmin() {
         onClose={openCloseModal}
         onRefetch={onRefetch}
         category={category}
+        typeActionForm="update"
       />
     );
     openCloseModal();
@@ -93,7 +95,7 @@ export function CategoriesAdmin() {
     const onSubmitActive = async () => {
       await updateCategory(category.id, { active: !category.active }, "active")
         .then(() => {
-          renderMessageAction("update", "Category");
+          renderMessageAction("Category", "update");
         })
         .catch((err) => {
           renderError(err, "category", "update");

@@ -15,7 +15,7 @@ export function DeleteProductFormAdmin(props) {
   const submitDelete = async () => {
     try {
       await deleteProduct(product.id);
-      renderMessageAction("delete", "Product");
+      renderMessageAction("Product", "delete");
       onClose();
       onRefetch();
     } catch (err) {

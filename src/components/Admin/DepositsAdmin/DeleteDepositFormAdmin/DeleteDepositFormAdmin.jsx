@@ -1,29 +1,29 @@
 import React from "react";
 import { Button, Descriptions, Space } from "antd";
 import { map } from "lodash";
-import { descriptionsDeleteCategory } from "../../../../utils/deleteOptions";
+import { descriptionsDeleteDeposit } from "../../../../utils/deleteOptions";
 
-import { useCategory } from "../../../../hooks";
+import { useDeposit } from "../../../../hooks";
 import { renderError } from "../../../../utils/renderHelpers";
 import { renderMessageAction } from "../../../../utils/renderHelpers";
 
-import "./DeleteCategoryFormAdmin.scss";
+import "./DeleteDepositFormAdmin.scss";
 
-export function DeleteCategoryFormAdmin(props) {
-  const { onClose, onRefetch, category } = props;
-  const { deleteCategory, loadingCategory } = useCategory();
+export function DeleteDepositFormAdmin(props) {
+  const { onClose, onRefetch, deposit } = props;
+  const { deleteDeposit, loadingDeposit } = useDeposit();
   const submitDelete = async () => {
     try {
-      await deleteCategory(category.id);
-      renderMessageAction("Category", "delete");
+      await deleteDeposit(deposit.id);
+      renderMessageAction("Deposit", "delete");
       onClose();
       onRefetch();
     } catch (err) {
-      renderError(err, "category", "delete");
+      renderError(err, "deposit", "delete");
     }
   };
   return (
-    <div className="delete-category-form-admin">
+    <div className="delete-deposit-form-admin">
       <Descriptions
         title="Información de categoría"
         bordered
@@ -37,25 +37,25 @@ export function DeleteCategoryFormAdmin(props) {
           xs: 1,
         }}
       >
-        {map(descriptionsDeleteCategory(category), (item, index) => (
+        {map(descriptionsDeleteDeposit(deposit), (item, index) => (
           <Descriptions.Item key={index} label={item.title}>
             {item.content}
           </Descriptions.Item>
         ))}
       </Descriptions>
-      <Space className="delete-category-form-admin__actions" wrap>
+      <Space className="delete-deposit-form-admin__actions" wrap>
         <Button
           type="default"
           danger
           onClick={onClose}
-          disabled={loadingCategory}
+          disabled={loadingDeposit}
         >
           Cancelar
         </Button>
         <Button
           type="primary"
           danger
-          loading={loadingCategory}
+          loading={loadingDeposit}
           onClick={submitDelete}
         >
           Eliminar

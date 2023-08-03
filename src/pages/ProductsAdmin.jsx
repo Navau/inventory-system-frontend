@@ -10,6 +10,7 @@ import {
 import { Loader, ModalAdmin } from "../components/Common";
 import { renderError, renderMessageAction } from "../utils/renderHelpers";
 import { PlusOutlined, ReloadOutlined } from "@ant-design/icons";
+import { isEmpty } from "lodash";
 
 export function ProductsAdmin() {
   const {
@@ -31,14 +32,15 @@ export function ProductsAdmin() {
   const [searchOptionFilter, setSearchOptionFilter] = useState(undefined);
 
   useEffect(() => {
-    getProducts(active).catch((err) => renderError(err, "products", "getAll"));
-  }, [refetch]);
-
-  useEffect(() => {
-    searchProducts(searchProduct, searchOptionFilter).catch((err) =>
-      renderError(err, "products", "search")
-    );
-  }, [searchProduct, searchProductAux]);
+    if (!isEmpty(searchProduct))
+      searchProducts(searchProduct, searchOptionFilter).catch((err) =>
+        renderError(err, "products", "search")
+      );
+    else
+      getProducts(active).catch((err) =>
+        renderError(err, "products", "getAll")
+      );
+  }, [refetch, searchProduct, searchProductAux]);
 
   const openCloseModal = () => setShowModal((prev) => !prev);
   const onRefetch = () => setRefetch((prev) => !prev);
@@ -86,7 +88,7 @@ export function ProductsAdmin() {
   const onChangeActiveProduct = async (product) => {
     await updateProduct(product.id, { active: !product.active }, "active")
       .then(() => {
-        renderMessageAction("update", "Product");
+        renderMessageAction("Product", "update");
       })
       .catch((err) => {
         renderError(err, "product", "update");

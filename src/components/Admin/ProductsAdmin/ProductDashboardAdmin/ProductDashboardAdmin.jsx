@@ -1,12 +1,13 @@
 import React from "react";
 
 import "./ProductDashboardAdmin.scss";
+import { Typography } from "antd";
 
 export function ProductDashboardAdmin(props) {
   const {} = props;
   return (
     <div>
-      <h1>ProductDashboardAdmin</h1>
+      <Typography.Title>ProductDashboardAdmin</Typography.Title>
     </div>
   );
 }
