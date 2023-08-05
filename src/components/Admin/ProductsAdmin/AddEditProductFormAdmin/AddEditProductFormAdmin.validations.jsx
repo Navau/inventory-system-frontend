@@ -63,8 +63,8 @@ export function updateSchemaProduct(data) {
       .typeError("La categoría no es un valor válido")
       .required("La categoría es obligatorio"),
     deposit: Yup.number()
-      .typeError("El deposito no es un valor válido")
-      .required("El deposito es obligatorio"),
+      .typeError("El depósito no es un valor válido")
+      .required("El depósito es obligatorio"),
   };
 }
 
@@ -119,7 +119,7 @@ export function addSchemaProduct() {
       .typeError("La categoría no es un valor válido")
       .required("La categoría es obligatorio"),
     deposit: Yup.number()
-      .typeError("El deposito no es un valor válido")
-      .required("El deposito es obligatorio"),
+      .typeError("El depósito no es un valor válido")
+      .required("El depósito es obligatorio"),
   };
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Button, Descriptions, Space } from "antd";
 import { map } from "lodash";
 import { descriptionsDeleteProduct } from "../../../../utils/deleteOptions";
@@ -38,9 +38,11 @@ export function DeleteProductFormAdmin(props) {
         }}
       >
         {map(descriptionsDeleteProduct(product), (item, index) => (
-          <Descriptions.Item key={index} label={item.title}>
-            {item.content}
-          </Descriptions.Item>
+          <Fragment key={index}>
+            <Descriptions.Item label={item.title}>
+              {item.content}
+            </Descriptions.Item>
+          </Fragment>
         ))}
       </Descriptions>
       <Space className="delete-product-form-admin__actions" wrap>

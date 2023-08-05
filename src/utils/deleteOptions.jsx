@@ -6,6 +6,8 @@ import {
   ClockCircleOutlined,
   UnorderedListOutlined,
   ApartmentOutlined,
+  DatabaseOutlined,
+  EnvironmentOutlined,
 } from "@ant-design/icons";
 import { Space } from "antd";
 
@@ -70,7 +72,7 @@ export const descriptionsDeleteProduct = (product) => {
   };
 };
 
-export const descriptionsDeleteCategory = (product) => {
+export const descriptionsDeleteCategory = (category) => {
   return {
     código: {
       title: (
@@ -78,7 +80,7 @@ export const descriptionsDeleteCategory = (product) => {
           <IdcardOutlined /> <span>Código</span>
         </Space>
       ),
-      content: product.id,
+      content: category.id,
     },
     producto: {
       title: (
@@ -86,7 +88,7 @@ export const descriptionsDeleteCategory = (product) => {
           <TagOutlined /> <span>Categoría</span>
         </Space>
       ),
-      content: product.name,
+      content: category.name,
     },
     "creado en": {
       title: (
@@ -94,12 +96,12 @@ export const descriptionsDeleteCategory = (product) => {
           <ClockCircleOutlined /> <span>Creado en</span>
         </Space>
       ),
-      content: product.created_at,
+      content: category.created_at,
     },
   };
 };
 
-export const descriptionsDeleteDeposit = (product) => {
+export const descriptionsDeleteDeposit = (deposit) => {
   return {
     código: {
       title: (
@@ -107,15 +109,31 @@ export const descriptionsDeleteDeposit = (product) => {
           <IdcardOutlined /> <span>Código</span>
         </Space>
       ),
-      content: product.id,
+      content: deposit.id,
     },
-    producto: {
+    depósito: {
       title: (
         <Space>
-          <TagOutlined /> <span>Categoría</span>
+          <TagOutlined /> <span>Depósito</span>
         </Space>
       ),
-      content: product.name,
+      content: deposit.name,
+    },
+    "capacidad máxima": {
+      title: (
+        <Space>
+          <DatabaseOutlined /> <span>Capacidad Máxima</span>
+        </Space>
+      ),
+      content: deposit.capacity,
+    },
+    dirección: {
+      title: (
+        <Space>
+          <EnvironmentOutlined /> <span>Dirección</span>
+        </Space>
+      ),
+      content: deposit.address,
     },
     "creado en": {
       title: (
@@ -123,7 +141,7 @@ export const descriptionsDeleteDeposit = (product) => {
           <ClockCircleOutlined /> <span>Creado en</span>
         </Space>
       ),
-      content: product.created_at,
+      content: deposit.created_at,
     },
   };
 };

@@ -27,6 +27,7 @@ export function TableProductsAdmin(props) {
       pagination={{
         position: ["bottomCenter"],
         pageSize: 5,
+        size: isTabletOrMobile ? "small" : "large",
       }}
       scroll={{ x: 200 }}
       rowClassName={getRowClassName}

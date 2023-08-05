@@ -10,10 +10,10 @@ export function ActiveDepositFormAdmin(props) {
   return (
     <div className="active-deposit-form-admin">
       <Typography.Text className="active-deposit-form-admin__warning-text">
-        Recuerda que si desactivas una categoría, los productos asociados a ella
-        quedarán sin categoría asignada. Ten en cuenta que esta acción eliminará
-        la conexión entre la categoría y los productos afectados. Te
-        recomendamos revisar cuidadosamente antes de realizar este cambio.
+        Recuerda que si desactivas un depósito, los productos asociados a el
+        quedarán sin depósito asignado. Ten en cuenta que esta acción eliminará
+        la conexión entre el depósito y los productos afectados. Te recomendamos
+        revisar cuidadosamente antes de realizar este cambio.
       </Typography.Text>
       <Space className="active-deposit-form-admin__actions" wrap>
         <Button

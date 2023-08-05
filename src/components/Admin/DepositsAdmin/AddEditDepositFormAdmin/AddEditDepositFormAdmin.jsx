@@ -82,7 +82,7 @@ function DepositForm(props) {
             label={
               <Space>
                 <TagOutlined />
-                <span>Nombre del deposito</span>
+                <span>Nombre del depósito</span>
               </Space>
             }
             validateStatus={formik.errors.name ? "error" : ""}
@@ -91,7 +91,7 @@ function DepositForm(props) {
           >
             <Input
               name="name"
-              placeholder="Nombre del deposito"
+              placeholder="Nombre del depósito"
               status={formik.errors.name && "error"}
               value={formik.values.name}
               onChange={formik.handleChange}
@@ -101,7 +101,7 @@ function DepositForm(props) {
             label={
               <Space>
                 <FileTextOutlined />
-                <span>Descripción del deposito</span>
+                <span>Descripción del depósito</span>
               </Space>
             }
             validateStatus={formik.errors.description ? "error" : ""}
@@ -112,7 +112,7 @@ function DepositForm(props) {
               rows={3}
               maxLength={2000}
               status={formik.errors.description && "error"}
-              placeholder="Descripción del deposito"
+              placeholder="Descripción del depósito"
               value={formik.values.description}
               onChange={formik.handleChange}
             />
@@ -136,7 +136,7 @@ function DepositForm(props) {
               name="capacity"
               type="decimal"
               status={formik.errors.capacity && "error"}
-              placeholder="Precio"
+              placeholder="Capacidad Máxima"
               value={formik.values.capacity}
               onChange={formik.handleChange}
             />
@@ -155,7 +155,7 @@ function DepositForm(props) {
           >
             <Input
               name="address"
-              placeholder="Stock"
+              placeholder="Dirección"
               status={formik.errors.address && "error"}
               value={formik.values.address}
               onChange={formik.handleChange}
@@ -172,7 +172,7 @@ function DepositForm(props) {
               isUndefined(deposit) ? "btn-submit-add" : "btn-submit-update"
             }
           >
-            {isUndefined(deposit) ? "Crear Deposito" : "Actualizar Deposito"}
+            {isUndefined(deposit) ? "Crear Depósito" : "Actualizar Depósito"}
           </Button>
           <Button type="primary" danger onClick={onClose}>
             Cancelar

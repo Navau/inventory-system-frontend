@@ -14,14 +14,14 @@ export function updateSchemaDeposit(data) {
   return {
     name: Yup.string()
       .trim(
-        "El nombre del deposito no debe incluir espacios en blanco por demas"
+        "El nombre del depósito no debe incluir espacios en blanco por demas"
       )
-      .min(1, "El nombre del deposito debe contener como mínimo 1 caracter")
+      .min(1, "El nombre del depósito debe contener como mínimo 1 caracter")
       .max(
         254,
-        "El nombre del deposito debe contener como máximo 254 caracteres"
+        "El nombre del depósito debe contener como máximo 254 caracteres"
       )
-      .required("El nombre del deposito es obligatorio"),
+      .required("El nombre del depósito es obligatorio"),
     description: Yup.string()
       .trim("La descripción no debe incluir espacios en blanco por demas")
       .min(1, "La descripción debe contener como minimo 1 caracter")
@@ -53,14 +53,14 @@ export function addSchemaDeposit() {
   return {
     name: Yup.string()
       .trim(
-        "El nombre del deposito no debe incluir espacios en blanco por demas"
+        "El nombre del depósito no debe incluir espacios en blanco por demas"
       )
-      .min(1, "El nombre del deposito debe contener como mínimo 1 caracter")
+      .min(1, "El nombre del depósito debe contener como mínimo 1 caracter")
       .max(
         254,
-        "El nombre del deposito debe contener como máximo 254 caracteres"
+        "El nombre del depósito debe contener como máximo 254 caracteres"
       )
-      .required("El nombre del deposito es obligatorio"),
+      .required("El nombre del depósito es obligatorio"),
     description: Yup.string()
       .trim("La descripción no debe incluir espacios en blanco por demas")
       .min(1, "La descripción debe contener como minimo 1 caracter")

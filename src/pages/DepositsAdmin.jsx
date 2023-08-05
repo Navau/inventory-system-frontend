@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDeposit } from "../hooks";
 import { PlusOutlined, ReloadOutlined } from "@ant-design/icons";
 import {
-  TableDepositsAdmin,
+  ListDepositsAdmin,
   MyHeaderPage,
   AddEditDepositFormAdmin,
   DeleteDepositFormAdmin,
@@ -51,7 +51,7 @@ export function DepositsAdmin() {
 
   const onAddDeposit = () => {
     setActionModal("add");
-    setTitleModal("Nueva Deposito: ¡Agrega tus detalles!");
+    setTitleModal("Nueva Depósito: ¡Agrega tus detalles!");
     setContentModal(
       <AddEditDepositFormAdmin onClose={openCloseModal} onRefetch={onRefetch} />
     );
@@ -61,7 +61,7 @@ export function DepositsAdmin() {
   const onUpdateDeposit = (deposit) => {
     setActionModal("update");
     setTitleModal(
-      `Actualizar Detalles del Deposito: ¡Haz los cambios necesarios!`
+      `Actualizar Detalles del Depósito: ¡Haz los cambios necesarios!`
     );
     setContentModal(
       <AddEditDepositFormAdmin
@@ -75,7 +75,7 @@ export function DepositsAdmin() {
 
   const onDeleteDeposit = (deposit) => {
     setActionModal("delete");
-    setTitleModal(`¡Atención! ¿Está seguro de eliminar este deposito?`);
+    setTitleModal(`¡Atención! ¿Está seguro de eliminar este depósito?`);
     setContentModal(
       <DeleteDepositFormAdmin
         onClose={openCloseModal}
@@ -123,10 +123,10 @@ export function DepositsAdmin() {
       ) : (
         <>
           <MyHeaderPage
-            title="Depositos"
+            title="Depósitos"
             btnOptions={[
               {
-                title: "Nuevo Deposito",
+                title: "Nuevo Depósito",
                 type: "primary",
                 onClick: onAddDeposit,
                 icon: <PlusOutlined />,
@@ -140,7 +140,7 @@ export function DepositsAdmin() {
             ]}
             inputOptions={[
               {
-                title: "Busca algún deposito",
+                title: "Busca algún depósito",
                 onSearch: setSearchDeposit,
                 filter: {
                   type: "search",
@@ -158,7 +158,7 @@ export function DepositsAdmin() {
           {loadingSearchDeposit ? (
             <Loader />
           ) : (
-            <TableDepositsAdmin
+            <ListDepositsAdmin
               deposits={deposits}
               onChangeActiveDeposit={onChangeActiveDeposit}
               onUpdateDeposit={onUpdateDeposit}

@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "react";
 import { Button, Descriptions, Space } from "antd";
 import { map } from "lodash";
 import { descriptionsDeleteDeposit } from "../../../../utils/deleteOptions";
@@ -25,7 +25,7 @@ export function DeleteDepositFormAdmin(props) {
   return (
     <div className="delete-deposit-form-admin">
       <Descriptions
-        title="Información de categoría"
+        title="Información de depósito"
         bordered
         size="small"
         column={{
@@ -38,9 +38,11 @@ export function DeleteDepositFormAdmin(props) {
         }}
       >
         {map(descriptionsDeleteDeposit(deposit), (item, index) => (
-          <Descriptions.Item key={index} label={item.title}>
-            {item.content}
-          </Descriptions.Item>
+          <Fragment key={index}>
+            <Descriptions.Item label={item.title}>
+              {item.content}
+            </Descriptions.Item>
+          </Fragment>
         ))}
       </Descriptions>
       <Space className="delete-deposit-form-admin__actions" wrap>

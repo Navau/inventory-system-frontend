@@ -1,0 +1,23 @@
+@import "../../../../scss/colors.scss";
+.collapse-deposits-admin {
+  .ant-collapse-item .ant-collapse-header .ant-collapse-header-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  .active-panel {
+    background-color: $dodger-blue-transparent;
+  }
+
+  .inactive-panel {
+    background-color: $danger-red-transparent;
+  }
+}
+.pagination-deposits-admin {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}

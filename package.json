@@ -13,6 +13,7 @@
     "@ant-design/icons": "^5.1.0",
     "antd": "^5.5.1",
     "axios": "^1.4.0",
+    "classnames": "^2.3.2",
     "formik": "^2.2.9",
     "inflection": "^2.0.1",
     "lodash": "^4.17.21",

@@ -26,7 +26,7 @@ export function AddEditCategoryFormAdmin(props) {
   return (
     <div className="add-edit-user-form-admin">
       <CategoryForm
-        category={initialValuesCategory(category)}
+        category={category}
         addCategory={addCategory}
         updateCategory={updateCategory}
         onClose={onClose}
